@@ -2,7 +2,7 @@ const APP_CONFIG = {
     APP_NAME: 'FlipBookPro',
     
     // After enabling GitHub Pages, update this:
-    BASE_URL: 'https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/',
+    BASE_URL: 'https://pankajthaku1998/.github.io/FlipBook/',
 
     STORAGE_KEY: 'flipbook_pro_books',
 
