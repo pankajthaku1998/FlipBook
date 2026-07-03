@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipBookPro - PDF to FlipBook</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="js/config.js"></script>
+</head>
+<body>
+
+    <!-- ── Navbar ── -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>FlipBook<span class="highlight">Pro</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="dashboard.html">My FlipBooks</a>
+            </div>
+            <a href="dashboard.html" class="btn btn-primary btn-sm nav-cta">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">My FlipBooks</a>
+    </div>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-google-drive" style="color:#4285F4"></i>
+                    Google Drive Powered FlipBooks
+                </div>
+                <h1>Paste a Google Drive Link,<br>Get a <span class="gradient-text">FlipBook</span></h1>
+                <p class="hero-subtitle">
+                    Share your PDF on Google Drive, paste the link here,
+                    and we'll turn it into a beautiful interactive flipbook instantly.
+                </p>
+            </div>
+
+            <!-- ── Upload Card ── -->
+            <div class="upload-section">
+                <div class="upload-card">
+
+                    <!-- Step 1: Input Method Choice -->
+                    <div id="methodSection">
+                        <h3 class="card-heading">
+                            <i class="fas fa-plus-circle"></i> Create New FlipBook
+                        </h3>
+
+                        <div class="method-tabs">
+                            <button class="method-tab active" data-tab="drive">
+                                <i class="fab fa-google-drive"></i>
+                                Google Drive Link
+                            </button>
+                            <button class="method-tab" data-tab="upload">
+                                <i class="fas fa-upload"></i>
+                                Upload PDF
+                            </button>
+                        </div>
+
+                        <!-- Google Drive Tab -->
+                        <div class="tab-content active" id="driveTab">
+                            <div class="drive-instructions">
+                                <div class="instruction-step">
+                                    <span class="step-badge">1</span>
+                                    <div>
+                                        <strong>Upload PDF to Google Drive</strong>
+                                        <p>Go to <a href="https://drive.google.com" target="_blank">drive.google.com</a> and upload your PDF</p>
+                                    </div>
+                                </div>
+                                <div class="instruction-step">
+                                    <span class="step-badge">2</span>
+                                    <div>
+                                        <strong>Set sharing to "Anyone with the link"</strong>
+                                        <p>Right-click file → Share → Change to Anyone with link → Viewer</p>
+                                    </div>
+                                </div>
+                                <div class="instruction-step">
+                                    <span class="step-badge">3</span>
+                                    <div>
+                                        <strong>Copy and paste the link below</strong>
+                                        <p>Paste the share link from Google Drive</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="drive-input-wrap">
+                                <div class="drive-input-box">
+                                    <i class="fab fa-google-drive drive-icon"></i>
+                                    <input
+                                        type="text"
+                                        id="driveLink"
+                                        class="drive-input"
+                                        placeholder="Paste Google Drive link here..."
+                                        autocomplete="off"
+                                        spellcheck="false"
+                                    >
+                                    <button class="btn btn-ghost btn-sm" id="clearDriveLink" title="Clear">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="link-status" id="linkStatus"></div>
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block" id="loadDriveBtn">
+                                <i class="fas fa-magic"></i> Load PDF from Drive
+                            </button>
+                        </div>
+
+                        <!-- Upload Tab -->
+                        <div class="tab-content" id="uploadTab">
+                            <div class="upload-area" id="uploadArea">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h3>Drop your PDF here</h3>
+                                <p>or click to browse</p>
+                                <p class="upload-hint">Any size • PDF only</p>
+                                <input type="file" id="pdfInput" accept=".pdf" hidden>
+                                <button class="btn btn-primary" id="browseBtn">
+                                    <i class="fas fa-folder-open"></i> Choose File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Processing -->
+                    <div id="processingSection" style="display:none">
+                        <div class="processing-header">
+                            <div class="processing-icon">
+                                <i class="fas fa-cog fa-spin"></i>
+                            </div>
+                            <h3 id="processingTitle">Loading PDF...</h3>
+                            <p id="processingSubtitle">Please wait</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <p class="progress-text" id="progressText">Connecting...</p>
+                    </div>
+
+                    <!-- Title Form -->
+                    <div id="titleSection" style="display:none">
+                        <div class="pdf-preview-row">
+                            <img id="previewThumb" class="preview-thumb" src="" alt="Preview">
+                            <div class="pdf-preview-info">
+                                <p class="preview-filename" id="previewFilename">document.pdf</p>
+                                <p class="preview-pages" id="previewPages">0 pages</p>
+                                <p class="preview-source" id="previewSource">
+                                    <i class="fab fa-google-drive"></i> Google Drive
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">FlipBook Title *</label>
+                            <input type="text" id="bookTitle"
+                                class="input-field"
+                                placeholder="Enter a title...">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Description (optional)</label>
+                            <textarea id="bookDescription"
+                                class="input-field textarea-field"
+                                placeholder="Short description..."></textarea>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg btn-block" id="createBtn">
+                            <i class="fas fa-book-open"></i> Create FlipBook
+                        </button>
+                        <button class="btn btn-ghost btn-sm back-btn" id="backBtn">
+                            <i class="fas fa-arrow-left"></i> Go back
+                        </button>
+                    </div>
+
+                    <!-- Success -->
+                    <div id="successSection" style="display:none">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>FlipBook Created! 🎉</h3>
+                        <p class="success-sub">Share this link with anyone</p>
+
+                        <div class="share-link-box">
+                            <input type="text" id="shareLink" readonly class="input-field">
+                            <button class="btn btn-primary" id="copyLinkBtn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="success-actions">
+                            <a href="#" class="btn btn-primary" id="viewBookBtn" target="_blank">
+                                <i class="fas fa-eye"></i> Open FlipBook
+                            </a>
+                            <a href="dashboard.html" class="btn btn-outline">
+                                <i class="fas fa-th-large"></i> Dashboard
+                            </a>
+                            <button class="btn btn-ghost" id="createAnotherBtn">
+                                <i class="fas fa-plus"></i> Create Another
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Done!</span>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

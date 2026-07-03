@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipBook Viewer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="viewer-body">
+    <!-- Viewer Toolbar -->
+    <div class="viewer-toolbar" id="viewerToolbar">
+        <div class="toolbar-left">
+            <a href="index.html" class="toolbar-logo">
+                <i class="fas fa-book-open"></i>
+                <span>FlipBook<span class="highlight">Pro</span></span>
+            </a>
+            <div class="toolbar-divider"></div>
+            <span class="book-title-display" id="bookTitleDisplay">Loading...</span>
+        </div>
+        <div class="toolbar-center">
+            <button class="toolbar-btn" id="firstPageBtn" title="First Page">
+                <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button class="toolbar-btn" id="prevPageBtn" title="Previous Page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="page-indicator">
+                <span id="currentPageNum">1</span> / <span id="totalPageNum">1</span>
+            </div>
+            <button class="toolbar-btn" id="nextPageBtn" title="Next Page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button class="toolbar-btn" id="lastPageBtn" title="Last Page">
+                <i class="fas fa-angle-double-right"></i>
+            </button>
+        </div>
+        <div class="toolbar-right">
+            <button class="toolbar-btn" id="zoomOutBtn" title="Zoom Out">
+                <i class="fas fa-search-minus"></i>
+            </button>
+            <span class="zoom-level" id="zoomLevel">100%</span>
+            <button class="toolbar-btn" id="zoomInBtn" title="Zoom In">
+                <i class="fas fa-search-plus"></i>
+            </button>
+            <div class="toolbar-divider"></div>
+            <button class="toolbar-btn" id="thumbnailToggle" title="Thumbnails">
+                <i class="fas fa-th"></i>
+            </button>
+            <button class="toolbar-btn" id="fullscreenBtn" title="Fullscreen">
+                <i class="fas fa-expand"></i>
+            </button>
+            <button class="toolbar-btn" id="shareBtn" title="Share">
+                <i class="fas fa-share-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Thumbnail Sidebar -->
+    <div class="thumbnail-sidebar" id="thumbnailSidebar">
+        <div class="thumbnail-header">
+            <h3>Pages</h3>
+            <button class="toolbar-btn" id="closeThumbnails">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="thumbnail-list" id="thumbnailList">
+            <!-- Thumbnails populated by JS -->
+        </div>
+    </div>
+
+    <!-- FlipBook Container -->
+    <div class="flipbook-viewport" id="flipbookViewport">
+        <div class="flipbook-container" id="flipbookContainer">
+            <div class="flipbook" id="flipbook">
+                <!-- Pages populated by JS -->
+            </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="nav-arrow nav-arrow-left" id="navLeft">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-arrow nav-arrow-right" id="navRight">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="shareModal" style="display:none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-share-alt"></i> Share FlipBook</h3>
+                <button class="modal-close" id="closeShareModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="share-link-box">
+                    <input type="text" id="viewerShareLink" readonly class="input-field">
+                    <button class="btn btn-primary" id="viewerCopyLink">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="share-social">
+                    <a href="#" class="social-btn whatsapp" id="shareWhatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="social-btn twitter" id="shareTwitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-btn facebook" id="shareFacebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-btn email" id="shareEmail">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="viewer-loading" id="viewerLoading">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Loading FlipBook...</h3>
+            <p id="loadingStatus">Preparing pages...</p>
+        </div>
+    </div>
+
+    <!-- Error Screen -->
+    <div class="viewer-error" id="viewerError" style="display:none;">
+        <div class="error-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>FlipBook Not Found</h3>
+            <p>The flipbook you're looking for doesn't exist or has been removed.</p>
+            <a href="index.html" class="btn btn-primary">
+                <i class="fas fa-home"></i> Go Home
+            </a>
+        </div>
+    </div>
+
+    <script src="js/viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FlipBookPro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>FlipBook<span class="highlight">Pro</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html" class="active">My FlipBooks</a>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Create New
+                </a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div>
+                    <h1>My FlipBooks</h1>
+                    <p>Manage and view all your created flipbooks</p>
+                </div>
+                <div class="dashboard-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchBooks" placeholder="Search flipbooks..." class="search-input">
+                    </div>
+                    <div class="view-toggle">
+                        <button class="toggle-btn active" id="gridViewBtn" title="Grid View">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="toggle-btn" id="listViewBtn" title="List View">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stats-card">
+                    <i class="fas fa-book"></i>
+                    <div>
+                        <span class="stats-number" id="statTotal">0</span>
+                        <span class="stats-label">Total FlipBooks</span>
+                    </div>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-file"></i>
+                    <div>
+                        <span class="stats-number" id="statPages">0</span>
+                        <span class="stats-label">Total Pages</span>
+                    </div>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <span class="stats-number" id="statRecent">-</span>
+                        <span class="stats-label">Last Created</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Books Grid -->
+            <div class="books-grid" id="booksGrid">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <div class="empty-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>No FlipBooks Yet</h3>
+                <p>Create your first flipbook by uploading a PDF</p>
+                <a href="index.html" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus"></i> Create FlipBook
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal" style="display:none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-trash-alt"></i> Delete FlipBook</h3>
+                <button class="modal-close" id="closeDeleteModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete "<span id="deleteBookTitle"></span>"? This action cannot be undone.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+                    <button class="btn btn-danger" id="confirmDelete">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Action completed!</span>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
